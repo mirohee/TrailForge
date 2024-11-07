@@ -25,7 +25,8 @@ class MainActivity : ComponentActivity() {
 
                     // Button for login functionality
                     Button(onClick = {
-                        // Handle login logic and navigation here
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
                     }) {
                         Text("Login")
                     }
