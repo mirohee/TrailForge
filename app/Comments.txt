@@ -1,0 +1,32 @@
+MainActivity
+
+This will be the entry point of the application and will display the user's saved hiking routes.
+It will include a button or menu option to create a new hiking route.
+
+
+RouteCreationActivity
+
+When the user taps the "Create New Route" button, this activity will open.
+The user can input details such as route name, terrain type, difficulty level, and estimated time.
+The user can drop pins on a map to define the route.
+Once the route is created, it will be saved to the database.
+
+
+HikingActivity
+
+When the user selects a saved route, this activity will open.
+It will display the route on a map and provide options to start/pause/resume the GPS tracking.
+The GPS track will be recorded and displayed on the map in real-time.
+The user can also add photos to the route during the hike.
+
+
+RouteDetailActivity
+
+This activity will display the details of a selected hiking route, including the GPS track, photos, and other metadata.
+The user can share the route with others or export it for future reference.
+
+
+WeatherActivity (optional)
+
+If the weather tracking feature is included, this activity will display the weather forecast for the selected hiking route.
+The user can view details such as temperature, precipitation, wind, and other relevant information.
