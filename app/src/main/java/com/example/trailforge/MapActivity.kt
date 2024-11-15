@@ -4,6 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -12,6 +15,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import android.app.AlertDialog
 
 class MapActivity : AppCompatActivity() {
 
@@ -39,8 +43,18 @@ class MapActivity : AppCompatActivity() {
         mapView.controller.setZoom(15.0)
         mapView.controller.setCenter(helsinkiLocation) // Start in Helsinki
 
-        // Add a marker at Helsinki initially
+        // Add default marker in Helsinki
         addMarker(helsinkiLocation, "Default Location: Helsinki")
+
+        // Set up button for adding markers
+        val btnAddMarker: Button = findViewById(R.id.btnAddMarker)
+        btnAddMarker.setOnClickListener {
+            // Add marker at the current center of the map
+            val currentCenter = mapView.mapCenter as GeoPoint
+
+            // Show dialog to enter marker name
+            showAddMarkerDialog(currentCenter)
+        }
 
         // Check permissions and request if not granted
         requestLocationPermissions()
@@ -95,6 +109,40 @@ class MapActivity : AppCompatActivity() {
         marker.title = title
         mapView.overlays.add(marker)
         mapView.invalidate() // Refresh the map
+    }
+
+    // Function to show a dialog and get marker name
+    private fun showAddMarkerDialog(location: GeoPoint) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Enter Marker Name")
+
+        // Set up the input
+        val input = EditText(this)
+        input.hint = "Enter marker name"
+        builder.setView(input)
+
+        // Set up the buttons
+        builder.setPositiveButton("Add") { dialog, _ ->
+            val markerName = input.text.toString().trim()
+
+            // If user didn't enter anything, show a message and return
+            if (markerName.isEmpty()) {
+                Toast.makeText(this, "Please enter a name for the marker", Toast.LENGTH_SHORT).show()
+                return@setPositiveButton
+            }
+
+            // Add the marker with the provided name
+            addMarker(location, markerName)
+
+            // Close the dialog
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
     }
 
     override fun onResume() {
