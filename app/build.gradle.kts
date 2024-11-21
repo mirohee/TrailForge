@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -19,8 +22,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Load Supabase properties from local.properties
-        val supabaseUrl: String = project.findProperty("SUPABASE_URL") as String? ?: ""
-        val supabaseApiKey: String = project.findProperty("SUPABASE_API_KEY") as String? ?: ""
+        val localProperties = project.rootProject.file("local.properties")
+        val properties = Properties()
+        if (localProperties.exists()) {
+            properties.load(FileInputStream(localProperties))
+        }
+
+        val supabaseUrl: String = properties.getProperty("SUPABASE_URL", "")
+        val supabaseApiKey: String = properties.getProperty("SUPABASE_API_KEY", "")
 
         buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
         buildConfigField("String", "SUPABASE_API_KEY", "\"$supabaseApiKey\"")
@@ -56,7 +65,6 @@ dependencies {
 
     implementation("io.ktor:ktor-client-android:3.0.0")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
-
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
