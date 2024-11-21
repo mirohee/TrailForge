@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.7.10"
 }
 
 android {
@@ -49,11 +49,14 @@ android {
 }
 
 dependencies {
-    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.2"))
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.0"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.github.jan-tennert.supabase:realtime-kt")
     implementation("io.github.jan-tennert.supabase:auth-kt")
+
     implementation("io.ktor:ktor-client-android:3.0.0")
-    implementation("io.ktor:ktor-client-serialization:3.0.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
+
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
