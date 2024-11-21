@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import com.example.trailforge.data.SupabaseClientProvider
+import io.github.jan.supabase.SupabaseClient
 
 class SignupActivity : ComponentActivity() {
 
@@ -26,6 +28,9 @@ class SignupActivity : ComponentActivity() {
 
         // Initialize the Room database
         //database = AppDatabase.getDatabase(this)
+        val supabase: SupabaseClient = SupabaseClientProvider.supabaseClient
+
+
         Log.e("SignupActivity", "Error during signup3")
         // Initialize UI components
         usernameEditText = findViewById(R.id.editTextUsername)
