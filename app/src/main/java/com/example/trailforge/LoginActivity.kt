@@ -8,6 +8,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.trailforge.SignupActivity
+import com.example.trailforge.data.SupabaseClientProvider
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {
@@ -38,29 +42,32 @@ class LoginActivity : ComponentActivity() {
             }
         }
 
+        // Redirect to signup activity
         signupText.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
             startActivity(intent)
-
         }
-
-
-
     }
 
-    // Function to handle login
+    // Function to handle login with Supabase
     private fun loginUser(email: String, password: String) {
-        val loginRequest = SignupRequest(email, password) // Reuse SignupRequest for login
+        val auth = SupabaseClientProvider.supabase.auth
 
         lifecycleScope.launch {
             try {
-                val response = RetrofitInstance.api.login(loginRequest)
-                Toast.makeText(this@LoginActivity, response.message, Toast.LENGTH_SHORT).show()
-                // Navigate to HomeActivity on successful login
+                auth.signInWith(Email) {
+                    this.email = email
+                    this.password = password
+                }
+
+                // Show success message
+                Toast.makeText(this@LoginActivity, "Signup successful", Toast.LENGTH_SHORT).show()
+
+                // Navigate to HomeActivity
                 navigateToHome()
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@LoginActivity, "Login failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Login failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
