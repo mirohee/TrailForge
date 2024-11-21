@@ -92,4 +92,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation (libs.osmdroid.android)
 
+
 }
