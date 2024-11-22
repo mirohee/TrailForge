@@ -26,4 +26,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp" />
 
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:text="Distance: 0 km"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:elevation="4dp" />
+
+
 </RelativeLayout>
