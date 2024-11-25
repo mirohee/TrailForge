@@ -46,7 +46,11 @@ class LoginActivity : ComponentActivity() {
         signupText.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
             startActivity(intent)
+
         }
+
+
+
     }
 
     // Function to handle login with Supabase
@@ -61,7 +65,7 @@ class LoginActivity : ComponentActivity() {
                 }
 
                 // Show success message
-                Toast.makeText(this@LoginActivity, "Signup successful", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
 
                 // Navigate to HomeActivity
                 navigateToHome()
