@@ -1,4 +1,5 @@
 package com.example.trailforge.data
+
 import com.example.trailforge.BuildConfig
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.auth.Auth
