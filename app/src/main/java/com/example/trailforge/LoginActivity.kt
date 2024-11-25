@@ -46,7 +46,11 @@ class LoginActivity : ComponentActivity() {
         signupText.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
             startActivity(intent)
+
         }
+
+
+
     }
 
     // Function to handle login with Supabase

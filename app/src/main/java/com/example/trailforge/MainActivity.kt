@@ -38,6 +38,14 @@ class MainActivity : ComponentActivity() {
                     }) {
                         Text("Go to Signup")
                     }
+
+                    // Button to go to SignupActivity
+                    Button(onClick = {
+                        val intent = Intent(this@MainActivity, MapActivity::class.java)
+                        startActivity(intent)
+                    }) {
+                        Text("Go to Map")
+                    }
                 }
             }
         }
