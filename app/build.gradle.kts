@@ -92,9 +92,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation (libs.osmdroid.android)
 
+
 }
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
+
+
+
+
