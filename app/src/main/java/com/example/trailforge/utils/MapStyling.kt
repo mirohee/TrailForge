@@ -29,16 +29,34 @@ object MapStyling {
                 strokeCap = Paint.Cap.ROUND
                 strokeJoin = Paint.Join.ROUND
                 isAntiAlias = true
-                setShadowLayer(6f, 0f, 0f, Color.parseColor("#40$ROUTE_COLOR"))
+                setShadowLayer(6f, 0f, 0f, createColorWithAlpha(ROUTE_COLOR, 0.25f))
+
             }
         }
     }
+    private fun createColorWithAlpha(color: String, alpha: Float): Int {
+        // Validate the input color
+        if (!color.startsWith("#") || (color.length != 7 && color.length != 9)) {
+            throw IllegalArgumentException("Invalid color format: $color")
+        }
 
-    fun createPointMarker(context: Context, point: GeoPoint): Marker {
-        return Marker(null).apply {
+        // Convert alpha (0.0 - 1.0) to a 2-digit hex string
+        val alphaHex = (alpha * 255).toInt().coerceIn(0, 255).toString(16).padStart(2, '0')
+
+        // Combine the alpha value with the base color (strip leading `#`)
+        val colorWithoutHash = color.substring(1)
+        val finalColor = "#$alphaHex$colorWithoutHash"
+
+        // Parse and return the color
+        return Color.parseColor(finalColor)
+    }
+
+
+    fun createPointMarker(mapView: org.osmdroid.views.MapView, point: GeoPoint): Marker {
+        return Marker(mapView).apply {
             position = point
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-            icon = createPointDrawable(context, POINT_COLOR)
+            icon = createPointDrawable(mapView.context, POINT_COLOR)
             setInfoWindow(null)
         }
     }

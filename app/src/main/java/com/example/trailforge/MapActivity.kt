@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -127,24 +128,20 @@ class MapActivity : AppCompatActivity() {
             return
         }
 
-        val lastPoint = routePoints.last()
-        val completionMarker = Marker(mapView).apply {
-            position = lastPoint
-            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-            val size = (POINT_SIZE_DP * 2 * resources.displayMetrics.density).toInt()
-            val checkmarkDrawable = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(Color.parseColor("#00C853"))
-                setStroke(4, Color.WHITE)
-                setSize(size, size)
-            }
-            icon = checkmarkDrawable
-            alpha = 0f
+        // Create an intent to launch RouteDetailsActivity
+        val intent = Intent(this, RouteDetailsActivity::class.java).apply {
+            // Convert GeoPoint list to ArrayList for parcelable passing
+            putParcelableArrayListExtra("route_points", ArrayList(routePoints))
+            putExtra("total_distance", totalDistance)
         }
+        startActivity(intent)
 
-        mapView.overlays.add(completionMarker)
+        // Reset route creation state
+        routePoints.clear()
+        totalDistance = 0.0
+        currentPolyline?.setPoints(emptyList())
+        mapView.overlays.removeAll { it is Marker }
         mapView.invalidate()
-        Toast.makeText(this, "Route saved with ${routePoints.size} points!", Toast.LENGTH_SHORT).show()
     }
 
     private fun addRoutePoint(point: GeoPoint) {
