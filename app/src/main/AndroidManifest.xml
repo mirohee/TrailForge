@@ -56,6 +56,8 @@
 
         <activity android:name=".TakePhotoActivity" android:exported="true" />
 
+        <activity android:name=".RouteDetailsActivity" />
+
         <!-- FileProvider for sharing image URI -->
         <provider
             android:name="androidx.core.content.FileProvider"
