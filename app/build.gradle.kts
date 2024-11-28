@@ -63,6 +63,13 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:realtime-kt")
     implementation("io.github.jan-tennert.supabase:auth-kt")
 
+
+
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("io.github.jan-tennert.supabase:supabase-kt:3.0.2")
+    implementation("io.github.jan-tennert.supabase:storage-kt:3.0.2")
+
     implementation("io.ktor:ktor-client-android:3.0.0")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
 

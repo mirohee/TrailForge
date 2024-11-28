@@ -3,7 +3,6 @@ package com.example.trailforge
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -21,6 +20,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.Manifest
 import android.util.Log
+import com.example.trailforge.data.SupabaseClientProvider
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class TakePhotoActivity : AppCompatActivity() {
 
@@ -33,15 +40,18 @@ class TakePhotoActivity : AppCompatActivity() {
             Log.e("TakePhoto", "Error during takephoto0")
             if (result.resultCode == RESULT_OK) {
                 try {
-                    // Get the URI and display the image in ImageView
                     val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), vFilename)
-                    val uri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
 
+                    // Display photo in ImageView
+                    val uri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
                     val myImageView: ImageView = findViewById(R.id.myImageView)
                     myImageView.setImageURI(uri)
-                    Toast.makeText(this, "Photo taken successfully!", Toast.LENGTH_SHORT).show()
+
+                    // Upload the photo to Supabase
+                    uploadPhotoToSupabase(file)
+
                 } catch (e: Exception) {
-                    Log.e("TakePhoto", "Error while displaying image: ${e.message}")
+                    Log.e("TakePhotoActivity", "Error while handling photo: ${e.message}")
                 }
             }
             Log.e("TakePhoto", "Error during takephoto1")
@@ -128,4 +138,36 @@ class TakePhotoActivity : AppCompatActivity() {
             }
         }
     }
+    private fun uploadPhotoToSupabase(file: File) {
+        val storage = SupabaseClientProvider.supabase.storage
+        val bucket = storage["photos"]
+
+        // Fetch the current session to get the user UID
+        val auth = SupabaseClientProvider.supabase.auth
+        val userId = auth.currentSessionOrNull()?.user?.id
+
+        if (userId == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Define the file path under the user's folder
+        val filePath = "uploads/$userId/${file.name}"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                bucket.upload(filePath, file.readBytes())
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@TakePhotoActivity, "Photo uploaded successfully!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e("TakePhotoActivity", "Error uploading photo: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@TakePhotoActivity, "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 }
