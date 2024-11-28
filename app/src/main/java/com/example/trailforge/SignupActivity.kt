@@ -13,10 +13,13 @@ import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 class SignupActivity : ComponentActivity() {
 
     private lateinit var usernameEditText: EditText
+    private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var signupButton: Button
     private lateinit var loginText: TextView
@@ -27,18 +30,20 @@ class SignupActivity : ComponentActivity() {
 
         // Initialize UI components
         usernameEditText = findViewById(R.id.editTextUsername)
+        emailEditText = findViewById(R.id.editTextEmail)
         passwordEditText = findViewById(R.id.editTextPassword)
         signupButton = findViewById(R.id.buttonSignup)
         loginText = findViewById(R.id.loginText)
 
         // Handle signup button click
         signupButton.setOnClickListener {
-            val email = usernameEditText.text.toString()
+            val username = usernameEditText.text.toString()
+            val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+            if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
                 if (isValidEmail(email)) {
-                    signupUser(email, password)
+                    signupUser(username, email, password)
                 } else {
                     Toast.makeText(this, "Invalid email address", Toast.LENGTH_SHORT).show()
                 }
@@ -60,18 +65,31 @@ class SignupActivity : ComponentActivity() {
     }
 
     // Function to handle the signup process
-    private fun signupUser(email: String, password: String) {
-        val auth = SupabaseClientProvider.supabase.auth // Access auth plugin correctly
+    private fun signupUser(username: String, email: String, password: String) {
+        val auth = SupabaseClientProvider.supabase.auth
 
         lifecycleScope.launch {
             try {
-                // Call signup with email and password
+                // Create JsonObject for user metadata
+                val userMetadata = buildJsonObject {
+                    put("username", username)
+                }
+
+                // Sign up with email, password, and metadata
                 val user = auth.signUpWith(Email) {
                     this.email = email
                     this.password = password
+                    this.data = userMetadata
                 }
+
+                // Fetch the logged-in user's details
+                val session = auth.currentSessionOrNull()
+                val loggedInUsername = session?.user?.userMetadata?.get("username")?.toString() ?: username
+
                 Toast.makeText(this@SignupActivity, "Signup successful: ${user?.email}", Toast.LENGTH_SHORT).show()
-                navigateToHome()
+
+                // Navigate to HomeActivity with logged-in username
+                navigateToHome(loggedInUsername)
             } catch (e: Exception) {
                 Log.e("SignupActivity", "Error signing up: ${e.message}")
                 Toast.makeText(this@SignupActivity, "Signup failed: ${e.localizedMessage ?: "Unknown error"}", Toast.LENGTH_SHORT).show()
@@ -79,10 +97,14 @@ class SignupActivity : ComponentActivity() {
         }
     }
 
+
     // Function to navigate to HomeActivity
-    private fun navigateToHome() {
-        val intent = Intent(this, HomeActivity::class.java)
+    private fun navigateToHome(username: String) {
+        val intent = Intent(this, HomeActivity::class.java).apply {
+            putExtra("username", username) // Pass username as an extra
+        }
         startActivity(intent)
         finish()
     }
+
 }

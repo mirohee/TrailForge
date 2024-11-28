@@ -59,16 +59,21 @@ class LoginActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             try {
+                // Perform the login
                 auth.signInWith(Email) {
                     this.email = email
                     this.password = password
                 }
 
+                // Retrieve user data after login
+                val session = auth.currentSessionOrNull()
+                val username = session?.user?.userMetadata?.get("username")?.toString() ?: "User"
+
                 // Show success message
                 Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
 
-                // Navigate to HomeActivity
-                navigateToHome()
+                // Navigate to HomeActivity with the username
+                navigateToHome(username)
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@LoginActivity, "Login failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
@@ -76,10 +81,14 @@ class LoginActivity : ComponentActivity() {
         }
     }
 
+
     // Function to navigate to HomeActivity
-    private fun navigateToHome() {
-        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+    private fun navigateToHome(username: String) {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
+            putExtra("username", username) // Pass the username to HomeActivity
+        }
         startActivity(intent)
-        finish() // Close LoginActivity so user cannot return with back button
+        finish() // Close LoginActivity so the user cannot return to it
     }
+
 }
