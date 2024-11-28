@@ -1,6 +1,7 @@
 package com.example.trailforge.utils;
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -13,23 +14,19 @@ import kotlinx.coroutines.launch
 object LogoutHelper {
 
 // Function to handle user logout
+@SuppressLint("SuspiciousIndentation")
 fun logoutUser(context: Context) {
     val auth = SupabaseClientProvider.supabase.auth
-
-            // Use lifecycleScope to perform logout asynchronously
-            // You can pass the activity's context to get access to the lifecycle scope
                     (context as? androidx.activity.ComponentActivity)?.lifecycleScope?.launch {
         try {
             // Perform logout
             auth.signOut()
-
-            // Show success message (optional)
+            // Show success message
             Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show()
-
             // Redirect to LoginActivity
             val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
-            (context as androidx.activity.ComponentActivity).finish() // Close current activity
+            context.finish() // Close current activity
         } catch (e: Exception) {
             // Handle any error that occurs during logout
             e.printStackTrace()
