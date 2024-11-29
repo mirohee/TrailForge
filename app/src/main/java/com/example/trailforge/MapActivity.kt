@@ -34,6 +34,7 @@ class MapActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var btnCreateRoute: Button
     private lateinit var tvDistance: TextView
+    private lateinit var btnRoutesList: Button
 
     private val routePoints = mutableListOf<GeoPoint>()
     private var totalDistance = 0.0  // Variable to hold the total distance of the route
@@ -42,7 +43,6 @@ class MapActivity : AppCompatActivity() {
     private var currentPolyline: Polyline? = null
     private val helsinkiLocation = GeoPoint(60.1699, 24.9384)
 
-    // Styling
     private val ROUTE_COLOR = Color.parseColor("#FF6B6B")
     private val POINT_COLOR = Color.parseColor("#4A4E69")
     private val POINT_BORDER_COLOR = Color.WHITE
@@ -57,6 +57,9 @@ class MapActivity : AppCompatActivity() {
         mapView.setMultiTouchControls(true)
         btnCreateRoute = findViewById(R.id.btnCreateRoute)
         tvDistance = findViewById(R.id.tvDistance)  // Initialize the TextView for distance
+
+        btnRoutesList = findViewById(R.id.btnRoutesList)
+
         setupMap()
         setupButtons()
         requestLocationPermissions()
@@ -90,6 +93,12 @@ class MapActivity : AppCompatActivity() {
     private fun setupButtons() {
         btnCreateRoute.setOnClickListener {
             toggleRouteCreation()
+        }
+
+        // Add click listener to open routes list
+        btnRoutesList.setOnClickListener {
+            val intent = Intent(this, RoutesListActivity::class.java)
+            startActivity(intent)
         }
     }
 

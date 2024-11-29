@@ -40,5 +40,14 @@
         android:textSize="16sp"
         android:elevation="4dp" />
 
+    <Button
+        android:id="@+id/btnRoutesList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDistance"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+    android:text="Routes List" />
+
 
 </RelativeLayout>
