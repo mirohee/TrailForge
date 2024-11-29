@@ -58,6 +58,8 @@
 
         <activity android:name=".RouteDetailsActivity" />
 
+        <activity android:name=".RoutesListActivity" android:exported="true" />
+
         <!-- FileProvider for sharing image URI -->
         <provider
             android:name="androidx.core.content.FileProvider"
