@@ -64,7 +64,8 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:auth-kt")
 
 
-
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("io.github.jan-tennert.supabase:supabase-kt:3.0.2")
@@ -95,6 +96,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

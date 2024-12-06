@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <!-- Button to take a photo -->
-    <Button
-        android:id="@+id/btn_takephoto"
-        android:layout_width="wrap_content"
+    <!-- LinearLayout to display buttons side by side -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take Photo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <!-- ImageView to display the taken photo -->
+        <!-- Button to take a photo -->
+        <Button
+            android:id="@+id/btn_takephoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take Photo" />
+
+        <!-- Button to view saved photos -->
+        <Button
+            android:id="@+id/btn_view_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Photos" />
+    </LinearLayout>
+
+    <!-- ImageView to display the taken photo with full size -->
     <ImageView
         android:id="@+id/myImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/btn_takephoto"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="Captured Image" />
-
-</RelativeLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Captured Image"
+        android:scaleType="fitCenter" />
+</LinearLayout>
