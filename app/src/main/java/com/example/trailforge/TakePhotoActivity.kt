@@ -1,6 +1,5 @@
 package com.example.trailforge
 
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -28,7 +27,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class TakePhotoActivity : AppCompatActivity() {
 
     private val PERMISSION_CODE = 1000
@@ -37,7 +35,6 @@ class TakePhotoActivity : AppCompatActivity() {
     // Define ActivityResultLauncher for camera intent
     private val takePictureLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.e("TakePhoto", "Error during takephoto0")
             if (result.resultCode == RESULT_OK) {
                 try {
                     val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), vFilename)
@@ -54,7 +51,6 @@ class TakePhotoActivity : AppCompatActivity() {
                     Log.e("TakePhotoActivity", "Error while handling photo: ${e.message}")
                 }
             }
-            Log.e("TakePhoto", "Error during takephoto1")
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,34 +58,36 @@ class TakePhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_take_photo)
 
         val btnTakePhoto: Button = findViewById(R.id.btn_takephoto)
-        val myImageView: ImageView = findViewById(R.id.myImageView)
+        val btnViewPhotos: Button = findViewById(R.id.btn_view_photos)
 
+        // Set up the button to take a photo
         btnTakePhoto.setOnClickListener {
-            Log.e("TakePhoto", "Button clicked, checking permissions")
-
-            // Check permissions first
             if (checkPermissions()) {
                 openCamera()
             } else {
                 requestPermissions()
             }
         }
+
+        // Set up the button to navigate to ViewPhotoActivity
+        btnViewPhotos.setOnClickListener {
+            val intent = Intent(this, ViewPhotoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
+    // Check if all necessary permissions are granted
     private fun checkPermissions(): Boolean {
         val cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         val readPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
         val writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-        Log.e("TakePhoto", "Camera permission: $cameraPermission, Read permission: $readPermission, Write permission: $writePermission")
-
         return cameraPermission == PackageManager.PERMISSION_GRANTED &&
                 readPermission == PackageManager.PERMISSION_GRANTED &&
                 writePermission == PackageManager.PERMISSION_GRANTED
     }
 
+    // Request permissions if they are not granted
     private fun requestPermissions() {
-        Log.e("TakePhoto", "Requesting permissions")
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -97,35 +95,24 @@ class TakePhotoActivity : AppCompatActivity() {
         )
     }
 
+    // Open the camera and save the photo to a file
     private fun openCamera() {
-        Log.e("TakePhoto", "Opening camera")
-
-        val values = ContentValues().apply {
-            put(MediaStore.Images.Media.TITLE, "New Picture")
-            put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        }
-
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-        // Generate a timestamp-based filename for the photo
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         vFilename = "FOTO_$timeStamp.jpg"
 
         try {
             val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), vFilename)
             val imageUri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
-
-            Log.e("TakePhoto", "File URI: $imageUri")
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
 
-            // Launch the camera intent using ActivityResultLauncher
             takePictureLauncher.launch(cameraIntent)
         } catch (e: Exception) {
-            Log.e("TakePhoto", "Error while opening camera: ${e.message}")
+            Log.e("TakePhotoActivity", "Error while opening camera: ${e.message}")
         }
     }
 
-    // Handle permissions request result
+    // Handle the result of the permission request
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -138,11 +125,12 @@ class TakePhotoActivity : AppCompatActivity() {
             }
         }
     }
+
+    // Upload the photo to Supabase
     private fun uploadPhotoToSupabase(file: File) {
         val storage = SupabaseClientProvider.supabase.storage
         val bucket = storage["photos"]
 
-        // Fetch the current session to get the user UID
         val auth = SupabaseClientProvider.supabase.auth
         val userId = auth.currentSessionOrNull()?.user?.id
 
@@ -151,13 +139,11 @@ class TakePhotoActivity : AppCompatActivity() {
             return
         }
 
-        // Define the file path under the user's folder
         val filePath = "uploads/$userId/${file.name}"
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 bucket.upload(filePath, file.readBytes())
-
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@TakePhotoActivity, "Photo uploaded successfully!", Toast.LENGTH_SHORT).show()
                 }
@@ -169,5 +155,4 @@ class TakePhotoActivity : AppCompatActivity() {
             }
         }
     }
-
 }
