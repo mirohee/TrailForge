@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.lifecycle.lifecycleScope
-import com.example.trailforge.utils.LogoutHelper  // Import the LogoutHelper class
+import com.example.trailforge.utils.LogoutHelper
 
 class HomeActivity : ComponentActivity() {
 
+    private lateinit var appNameText: TextView
     private lateinit var welcomeText: TextView
     private lateinit var logoutButton: Button
     private lateinit var addRouteButton: Button
@@ -22,14 +21,14 @@ class HomeActivity : ComponentActivity() {
         setContentView(R.layout.activity_home)
 
         // Initialize UI components
+        appNameText = findViewById(R.id.appName)
         welcomeText = findViewById(R.id.welcomeText)
         logoutButton = findViewById(R.id.logoutButton)
-        takePhotoButton = findViewById(R.id.takePhotoButton)
         addRouteButton = findViewById(R.id.addRouteButton)
-        profileInfo = findViewById(R.id.profileInfo)
+        takePhotoButton = findViewById(R.id.takePhotoButton)
 
         // Retrieve the username passed from the login/signup process
-        val username = intent.getStringExtra("username") ?: "User"
+        val username = intent.getStringExtra("username")?.replace("\"", "")?.trim() ?: "User"
         welcomeText.text = "Welcome, $username!"
 
         // Logout button click listener
@@ -37,12 +36,13 @@ class HomeActivity : ComponentActivity() {
             LogoutHelper.logoutUser(this)
         }
 
-        // Set up the add route button click listener
+        // Add route button click listener
         addRouteButton.setOnClickListener {
-            val intent = Intent(this@HomeActivity, AddRouteActivity::class.java)
+            val intent = Intent(this@HomeActivity, MapActivity::class.java)
             startActivity(intent)
         }
 
+        // Take photo button click listener
         takePhotoButton.setOnClickListener {
             val intent = Intent(this@HomeActivity, TakePhotoActivity::class.java)
             startActivity(intent)
