@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- After -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/wallpaper_homepage">
+
+    <!-- App Name -->
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trail Forge"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#3F51B5"
+        android:paddingBottom="16dp" />
 
     <!-- Welcome Text -->
     <TextView
@@ -15,51 +27,45 @@
         android:text="Welcome, User!"
         android:textSize="24sp"
         android:textColor="#000000"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="32dp"/>
+        android:paddingBottom="16dp"
+        android:layout_marginTop="8dp" />
 
-    <!-- Profile Information -->
-    <TextView
-        android:id="@+id/profileInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Here is your Profile Home Screen"
-        android:textSize="18sp"
-        android:textColor="#555555"
-        android:paddingBottom="30dp"/>
 
-    <!-- Logout Button -->
 
     <!-- Button to go to AddRouteActivity -->
     <Button
         android:id="@+id/addRouteButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#3F51B5"
-        android:text="Go to Add Route Activity"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#3F51B5"
+        android:text="Plan Your Next Route"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:padding="12dp" />
 
+    <!-- Photos Button -->
     <Button
         android:id="@+id/takePhotoButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#3F51B5"
-        android:text="Take Photo"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#3F51B5"
+        android:text="View Photos"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:padding="12dp" />
 
+    <!-- Logout Button -->
     <Button
         android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#3F51B5"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#FF5722"
         android:text="Logout"
-        android:textColor="@android:color/white" />
-
-
-
-
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:padding="12dp" />
 
 </LinearLayout>

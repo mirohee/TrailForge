@@ -2,52 +2,26 @@ package com.example.trailforge
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.trailforge.ui.theme.TrailForgeTheme
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            TrailForgeTheme {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(text = "Login Screen", modifier = Modifier.padding(bottom = 20.dp))
+        setContentView(R.layout.activity_main)
 
-                    // Username input field (you can add other UI components here as needed)
-                    Text(text = "Enter Username", modifier = Modifier.padding(bottom = 20.dp))
+        // Set up Sign Up button
+        val signUpButton = findViewById<Button>(R.id.btn_sign_up)
+        signUpButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, SignupActivity::class.java)
+            startActivity(intent)
+        }
 
-                    // Button for login functionality
-                    Button(onClick = {
-                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                    }) {
-                        Text("Login")
-                    }
-
-                    // Button to go to SignupActivity
-                    Button(onClick = {
-                        val intent = Intent(this@MainActivity, SignupActivity::class.java)
-                        startActivity(intent)
-                    }) {
-                        Text("Go to Signup")
-                    }
-
-                    // Button to go to SignupActivity
-                    Button(onClick = {
-                        val intent = Intent(this@MainActivity, MapActivity::class.java)
-                        startActivity(intent)
-                    }) {
-                        Text("Go to Map")
-                    }
-                }
-            }
+        // Set up Sign In button
+        val signInButton = findViewById<Button>(R.id.btn_sign_in)
+        signInButton.setOnClickListener {
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }
