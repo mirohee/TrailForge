@@ -27,6 +27,7 @@ import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
+import androidx.core.view.WindowCompat
 
 class MapActivity : AppCompatActivity() {
 
@@ -59,6 +60,10 @@ class MapActivity : AppCompatActivity() {
         tvDistance = findViewById(R.id.tvDistance)  // Initialize the TextView for distance
 
         btnRoutesList = findViewById(R.id.btnRoutesList)
+
+        // Make the status bar transparent
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = androidx.compose.ui.graphics.Color.Transparent.value.toInt() // Use android
 
         setupMap()
         setupButtons()

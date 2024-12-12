@@ -27,9 +27,9 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Make the status bar transparent
+        // Making the status bar transparent
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.Transparent.value.toInt() // Use android
+        window.statusBarColor = Color.Transparent.value.toInt()
 
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)

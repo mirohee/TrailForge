@@ -26,8 +26,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.graphics.Color
+import androidx.core.view.WindowCompat
 
 class TakePhotoActivity : AppCompatActivity() {
+
+
 
     private val PERMISSION_CODE = 1000
     private var vFilename: String = ""
@@ -56,6 +60,10 @@ class TakePhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_take_photo)
+
+        // Make the status bar transparent
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = androidx.compose.ui.graphics.Color.Transparent.value.toInt() // Use android
 
         val btnTakePhoto: Button = findViewById(R.id.btn_takephoto)
         val btnViewPhotos: Button = findViewById(R.id.btn_view_photos)

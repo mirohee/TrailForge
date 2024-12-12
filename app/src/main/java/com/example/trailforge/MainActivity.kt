@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Make the status bar transparent
+        // Making the status bar transparent
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.Transparent.value.toInt() // Use android.graphics.Color.TRANSPARENT
+        window.statusBarColor = Color.Transparent.value.toInt()
 
 
         // Set up Sign Up button

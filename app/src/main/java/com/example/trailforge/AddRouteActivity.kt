@@ -19,9 +19,10 @@ class AddRouteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Make the status bar transparent
+        // Making the status bar transparent
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = Color.Transparent.value.toInt() // Use android
+        window.statusBarColor = Color.Transparent.value.toInt()
+
         setContent {
             TrailForgeTheme {
                 Column(modifier = Modifier.padding(16.dp)) {
