@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.trailforge.SignupActivity
 import com.example.trailforge.data.SupabaseClientProvider
@@ -24,6 +26,10 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        // Make the status bar transparent
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.Transparent.value.toInt() // Use android
 
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)

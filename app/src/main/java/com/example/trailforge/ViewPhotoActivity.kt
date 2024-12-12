@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trailforge.data.SupabaseClientProvider
@@ -25,6 +27,10 @@ class ViewPhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_photo)
+
+        // Make the status bar transparent
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.Transparent.value.toInt() // Use android
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)

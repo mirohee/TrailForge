@@ -8,6 +8,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
@@ -27,6 +29,10 @@ class SignupActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+        // Make the status bar transparent
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.Transparent.value.toInt() // Use android
 
         // Initialize UI components
         usernameEditText = findViewById(R.id.editTextUsername)
