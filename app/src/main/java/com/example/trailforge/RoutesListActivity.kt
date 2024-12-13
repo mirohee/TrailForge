@@ -28,7 +28,6 @@ class RoutesListActivity : AppCompatActivity() {
     private lateinit var routesAdapter: RoutesAdapter
 
     companion object {
-        // Static list to store routes globally within the activity
         val routes = mutableListOf(
             Route(1, "Helsinki City Walk", "Explore downtown Helsinki", 5.6, listOf()),
             Route(2, "Waterfront Trail", "Scenic route along the coast", 8.2, listOf()),

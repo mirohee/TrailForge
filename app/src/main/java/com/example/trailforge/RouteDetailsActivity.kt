@@ -20,8 +20,10 @@ class RouteDetailsActivity : AppCompatActivity() {
     private lateinit var btnSaveRoute: Button
     private lateinit var routePreviewMap: MapView
 
-    private lateinit var routePoints: List<GeoPoint>
+    private var routePoints: List<GeoPoint> = listOf()
     private var totalDistance: Double = 0.0
+    private var isExistingRoute: Boolean = false
+    private var existingRouteId: Long? = null
 
     companion object {
         val ROUTE_COLOR = Color.parseColor("#FF6B6B")
@@ -32,14 +34,40 @@ class RouteDetailsActivity : AppCompatActivity() {
         Configuration.getInstance().load(this, getSharedPreferences("osm_pref", MODE_PRIVATE))
         setContentView(R.layout.activity_route_details)
 
+        // Initialize views
         etRouteName = findViewById(R.id.etRouteName)
         etRouteDescription = findViewById(R.id.etRouteDescription)
         btnAddPictures = findViewById(R.id.btnAddPictures)
         btnSaveRoute = findViewById(R.id.btnSaveRoute)
         routePreviewMap = findViewById(R.id.routePreviewMap)
 
-        routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
-        totalDistance = intent.getDoubleExtra("total_distance", 0.0)
+        // Check if this is an existing route or a new route
+        val routeName = intent.getStringExtra("route_name")
+        val routeDescription = intent.getStringExtra("route_description")
+
+        if (routeName != null) {
+            // Existing route
+            isExistingRoute = true
+            etRouteName.setText(routeName)
+            etRouteDescription.setText(routeDescription)
+
+            // Find the existing route to get its details
+            val existingRoute = RoutesListActivity.routes.find { it.name == routeName }
+            existingRouteId = existingRoute?.id
+
+            routePoints = existingRoute?.points ?: listOf()
+            totalDistance = existingRoute?.distance ?: 0.0
+
+            // Change button for viewing existing route
+            btnSaveRoute.text = "View Route"
+            etRouteName.isEnabled = false
+            etRouteDescription.isEnabled = false
+        } else {
+            // New route
+            routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
+            totalDistance = intent.getDoubleExtra("total_distance", 0.0)
+            btnSaveRoute.text = "Save Route"
+        }
 
         setupRoutePreviewMap(routePoints)
         setupButtonListeners()
@@ -50,6 +78,7 @@ class RouteDetailsActivity : AppCompatActivity() {
         routePreviewMap.controller.apply {
             setZoom(13.0)
 
+            // Center the map on the route
             if (routePoints.isNotEmpty()) {
                 val centerPoint = GeoPoint(
                     routePoints.map { it.latitude }.average(),
@@ -75,6 +104,18 @@ class RouteDetailsActivity : AppCompatActivity() {
         }
 
         btnSaveRoute.setOnClickListener {
+            if (isExistingRoute) {
+                // Launch full-screen route view for existing route
+                val intent = Intent(this, RouteViewActivity::class.java).apply {
+                    putParcelableArrayListExtra("route_points", ArrayList(routePoints))
+                    putExtra("route_name", etRouteName.text.toString())
+                    putExtra("route_description", etRouteDescription.text.toString())
+                    putExtra("total_distance", totalDistance)
+                }
+                startActivity(intent)
+                return@setOnClickListener
+            }
+
             val routeName = etRouteName.text.toString().trim()
             val routeDescription = etRouteDescription.text.toString().trim()
 

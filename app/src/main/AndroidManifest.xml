@@ -59,6 +59,8 @@
 
         <activity android:name=".ViewPhotoActivity" />
 
+        <activity android:name=".RouteViewActivity" />
+
 
         <!-- FileProvider for sharing image URI -->
         <provider
