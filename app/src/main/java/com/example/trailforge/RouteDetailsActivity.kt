@@ -20,7 +20,9 @@ class RouteDetailsActivity : AppCompatActivity() {
     private lateinit var btnSaveRoute: Button
     private lateinit var routePreviewMap: MapView
 
-    // Define the color here to avoid unresolved reference
+    private lateinit var routePoints: List<GeoPoint>
+    private var totalDistance: Double = 0.0
+
     companion object {
         val ROUTE_COLOR = Color.parseColor("#FF6B6B")
     }
@@ -30,21 +32,17 @@ class RouteDetailsActivity : AppCompatActivity() {
         Configuration.getInstance().load(this, getSharedPreferences("osm_pref", MODE_PRIVATE))
         setContentView(R.layout.activity_route_details)
 
-        // Initialize views
         etRouteName = findViewById(R.id.etRouteName)
         etRouteDescription = findViewById(R.id.etRouteDescription)
         btnAddPictures = findViewById(R.id.btnAddPictures)
         btnSaveRoute = findViewById(R.id.btnSaveRoute)
         routePreviewMap = findViewById(R.id.routePreviewMap)
 
-        // Retrieve route points from intent
-        val routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
+        routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
+        totalDistance = intent.getDoubleExtra("total_distance", 0.0)
 
-        // Setup map preview
         setupRoutePreviewMap(routePoints)
-
-        // Setup button listeners
-        setupButtonListeners(routePoints)
+        setupButtonListeners()
     }
 
     private fun setupRoutePreviewMap(routePoints: List<GeoPoint>) {
@@ -52,7 +50,6 @@ class RouteDetailsActivity : AppCompatActivity() {
         routePreviewMap.controller.apply {
             setZoom(13.0)
 
-            // Center the map on the route
             if (routePoints.isNotEmpty()) {
                 val centerPoint = GeoPoint(
                     routePoints.map { it.latitude }.average(),
@@ -62,7 +59,6 @@ class RouteDetailsActivity : AppCompatActivity() {
             }
         }
 
-        // Add route polyline to preview map
         if (routePoints.size > 1) {
             val polyline = Polyline().apply {
                 color = ROUTE_COLOR
@@ -73,9 +69,8 @@ class RouteDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupButtonListeners(routePoints: List<GeoPoint>) {
+    private fun setupButtonListeners() {
         btnAddPictures.setOnClickListener {
-            // TODO: Implement picture selection
             Toast.makeText(this, "Picture selection coming soon!", Toast.LENGTH_SHORT).show()
         }
 
@@ -88,10 +83,19 @@ class RouteDetailsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // TODO: Save route to database or persistent storage
-            Toast.makeText(this, "Route saved: $routeName", Toast.LENGTH_SHORT).show()
+            // Create a new route and add it to the static routes list
+            val newRoute = Route(
+                id = System.currentTimeMillis(), // Use timestamp as unique ID
+                name = routeName,
+                description = routeDescription,
+                distance = totalDistance,
+                points = routePoints
+            )
 
-            // Optional: Return to main activity or close
+            // Add the route to the static routes list
+            RoutesListActivity.routes.add(newRoute)
+
+            Toast.makeText(this, "Route saved: $routeName", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
