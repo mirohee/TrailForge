@@ -20,7 +20,11 @@ class RouteDetailsActivity : AppCompatActivity() {
     private lateinit var btnSaveRoute: Button
     private lateinit var routePreviewMap: MapView
 
-    // Define the color here to avoid unresolved reference
+    private var routePoints: List<GeoPoint> = listOf()
+    private var totalDistance: Double = 0.0
+    private var isExistingRoute: Boolean = false
+    private var existingRouteId: Long? = null
+
     companion object {
         val ROUTE_COLOR = Color.parseColor("#FF6B6B")
     }
@@ -37,14 +41,36 @@ class RouteDetailsActivity : AppCompatActivity() {
         btnSaveRoute = findViewById(R.id.btnSaveRoute)
         routePreviewMap = findViewById(R.id.routePreviewMap)
 
-        // Retrieve route points from intent
-        val routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
+        // Check if this is an existing route or a new route
+        val routeName = intent.getStringExtra("route_name")
+        val routeDescription = intent.getStringExtra("route_description")
 
-        // Setup map preview
+        if (routeName != null) {
+            // Existing route
+            isExistingRoute = true
+            etRouteName.setText(routeName)
+            etRouteDescription.setText(routeDescription)
+
+            // Find the existing route to get its details
+            val existingRoute = RoutesListActivity.routes.find { it.name == routeName }
+            existingRouteId = existingRoute?.id
+
+            routePoints = existingRoute?.points ?: listOf()
+            totalDistance = existingRoute?.distance ?: 0.0
+
+            // Change button for viewing existing route
+            btnSaveRoute.text = "View Route"
+            etRouteName.isEnabled = false
+            etRouteDescription.isEnabled = false
+        } else {
+            // New route
+            routePoints = intent.getParcelableArrayListExtra<GeoPoint>("route_points") ?: arrayListOf()
+            totalDistance = intent.getDoubleExtra("total_distance", 0.0)
+            btnSaveRoute.text = "Save Route"
+        }
+
         setupRoutePreviewMap(routePoints)
-
-        // Setup button listeners
-        setupButtonListeners(routePoints)
+        setupButtonListeners()
     }
 
     private fun setupRoutePreviewMap(routePoints: List<GeoPoint>) {
@@ -62,7 +88,6 @@ class RouteDetailsActivity : AppCompatActivity() {
             }
         }
 
-        // Add route polyline to preview map
         if (routePoints.size > 1) {
             val polyline = Polyline().apply {
                 color = ROUTE_COLOR
@@ -73,13 +98,24 @@ class RouteDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupButtonListeners(routePoints: List<GeoPoint>) {
+    private fun setupButtonListeners() {
         btnAddPictures.setOnClickListener {
-            // TODO: Implement picture selection
             Toast.makeText(this, "Picture selection coming soon!", Toast.LENGTH_SHORT).show()
         }
 
         btnSaveRoute.setOnClickListener {
+            if (isExistingRoute) {
+                // Launch full-screen route view for existing route
+                val intent = Intent(this, RouteViewActivity::class.java).apply {
+                    putParcelableArrayListExtra("route_points", ArrayList(routePoints))
+                    putExtra("route_name", etRouteName.text.toString())
+                    putExtra("route_description", etRouteDescription.text.toString())
+                    putExtra("total_distance", totalDistance)
+                }
+                startActivity(intent)
+                return@setOnClickListener
+            }
+
             val routeName = etRouteName.text.toString().trim()
             val routeDescription = etRouteDescription.text.toString().trim()
 
@@ -88,10 +124,19 @@ class RouteDetailsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // TODO: Save route to database or persistent storage
-            Toast.makeText(this, "Route saved: $routeName", Toast.LENGTH_SHORT).show()
+            // Create a new route and add it to the static routes list
+            val newRoute = Route(
+                id = System.currentTimeMillis(), // Use timestamp as unique ID
+                name = routeName,
+                description = routeDescription,
+                distance = totalDistance,
+                points = routePoints
+            )
 
-            // Optional: Return to main activity or close
+            // Add the route to the static routes list
+            RoutesListActivity.routes.add(newRoute)
+
+            Toast.makeText(this, "Route saved: $routeName", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
