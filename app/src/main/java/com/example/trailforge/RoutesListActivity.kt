@@ -27,12 +27,13 @@ class RoutesListActivity : AppCompatActivity() {
     private lateinit var fabCreateRoute: FloatingActionButton
     private lateinit var routesAdapter: RoutesAdapter
 
-    // In a real app, this would come from a database
-    private val routes = mutableListOf(
-        Route(1, "Helsinki City Walk", "Explore downtown Helsinki", 5.6, listOf()),
-        Route(2, "Waterfront Trail", "Scenic route along the coast", 8.2, listOf()),
-        Route(3, "Forest Path", "Peaceful woodland route", 3.4, listOf())
-    )
+    companion object {
+        val routes = mutableListOf(
+            Route(1, "Helsinki City Walk", "Explore downtown Helsinki", 5.6, listOf()),
+            Route(2, "Waterfront Trail", "Scenic route along the coast", 8.2, listOf()),
+            Route(3, "Forest Path", "Peaceful woodland route", 3.4, listOf())
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,11 @@ class RoutesListActivity : AppCompatActivity() {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        routesAdapter.notifyDataSetChanged()
     }
 }
 
