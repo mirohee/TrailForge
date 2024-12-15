@@ -8,6 +8,7 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.util.GeoPoint
 
+// Utility class for map styling
 object MapStyling {
     // Colors
     const val ROUTE_COLOR = "#FF6B6B"

@@ -10,11 +10,12 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.trailforge.SignupActivity
 import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
+
+// LoginActivity for users to log in to the app
 
 class LoginActivity : ComponentActivity() {
 
@@ -54,9 +55,6 @@ class LoginActivity : ComponentActivity() {
             startActivity(intent)
 
         }
-
-
-
     }
 
     // Function to handle login with Supabase

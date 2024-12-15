@@ -8,7 +8,8 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.util.GeoPoint
+
+// Utility class for map animations
 
 object MapAnimations {
     fun animateCompletionMarker(

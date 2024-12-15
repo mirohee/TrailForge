@@ -26,12 +26,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.graphics.Color
 import androidx.core.view.WindowCompat
 
+// Class for taking a photo and uploading it to Supabase
+
 class TakePhotoActivity : AppCompatActivity() {
-
-
 
     private val PERMISSION_CODE = 1000
     private var vFilename: String = ""
@@ -149,6 +148,7 @@ class TakePhotoActivity : AppCompatActivity() {
 
         val filePath = "uploads/$userId/${file.name}"
 
+        // Use a coroutine to upload the photo in the background
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 bucket.upload(filePath, file.readBytes())

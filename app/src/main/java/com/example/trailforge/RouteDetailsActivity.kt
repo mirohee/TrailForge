@@ -12,6 +12,8 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Polyline
 
+// RouteDetailsActivity is the activity where users can view and save a route
+
 class RouteDetailsActivity : AppCompatActivity() {
 
     private lateinit var etRouteName: TextInputEditText

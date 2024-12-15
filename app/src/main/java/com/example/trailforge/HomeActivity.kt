@@ -9,6 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.example.trailforge.utils.LogoutHelper
 
+// HomeActivity redirects users to the map activity to add a new route or take a photo
+
 class HomeActivity : ComponentActivity() {
 
     private lateinit var appNameText: TextView
@@ -16,7 +18,6 @@ class HomeActivity : ComponentActivity() {
     private lateinit var logoutButton: Button
     private lateinit var addRouteButton: Button
     private lateinit var takePhotoButton: Button
-    private lateinit var profileInfo: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

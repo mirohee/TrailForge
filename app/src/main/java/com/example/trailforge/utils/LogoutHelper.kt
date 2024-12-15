@@ -1,4 +1,4 @@
-package com.example.trailforge.utils;
+package com.example.trailforge.utils
 
 
 import android.annotation.SuppressLint
@@ -11,6 +11,8 @@ import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
+
+// Helper class to handle user logout
 object LogoutHelper {
 
 // Function to handle user logout

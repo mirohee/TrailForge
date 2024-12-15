@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.example.trailforge.ui.theme.TrailForgeTheme
 
+// AddRouteActivity is the activity where users can add a new route
 
 class AddRouteActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

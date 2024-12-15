@@ -18,6 +18,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
+// SignupActivity for users to sign up for the app
+
 class SignupActivity : ComponentActivity() {
 
     private lateinit var usernameEditText: EditText

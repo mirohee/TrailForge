@@ -29,6 +29,8 @@ import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import androidx.core.view.WindowCompat
 
+// MapActivity for users to create a new route on the map
+
 class MapActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView

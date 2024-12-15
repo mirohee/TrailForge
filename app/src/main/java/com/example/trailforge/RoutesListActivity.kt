@@ -23,6 +23,8 @@ data class Route(
     val points: List<GeoPoint>
 )
 
+// RoutesListActivity displays a list of routes
+
 class RoutesListActivity : AppCompatActivity() {
 
     private lateinit var rvRoutes: RecyclerView
@@ -78,10 +80,13 @@ class RoutesListActivity : AppCompatActivity() {
     }
 }
 
+// Adapter for the RecyclerView to display routes
+
 class RoutesAdapter(
     private val routes: List<Route>,
     private val onItemClick: (Route) -> Unit
 ) : RecyclerView.Adapter<RoutesAdapter.RouteViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -95,6 +100,8 @@ class RoutesAdapter(
 
     override fun getItemCount() = routes.size
 
+    // ViewHolder for the RecyclerView
+
     class RouteViewHolder(
         itemView: View,
         private val onItemClick: (Route) -> Unit
@@ -102,6 +109,7 @@ class RoutesAdapter(
         private val tvRouteName: TextView = itemView.findViewById(R.id.tvRouteName)
         private val tvRouteDistance: TextView = itemView.findViewById(R.id.tvRouteDistance)
 
+        // Bind data to the ViewHolder
         fun bind(route: Route) {
             tvRouteName.text = route.name
             tvRouteDistance.text = String.format("%.1f km", route.distance)

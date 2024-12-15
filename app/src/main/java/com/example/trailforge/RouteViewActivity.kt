@@ -13,6 +13,8 @@ import android.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.core.graphics.ColorUtils
 
+// RouteViewActivity displays a full-screen view of a route
+
 class RouteViewActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
@@ -28,7 +30,7 @@ class RouteViewActivity : AppCompatActivity() {
 
         // Make the status bar transparent
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = android.graphics.Color.TRANSPARENT
+        window.statusBarColor = Color.TRANSPARENT
 
         // Initialize views
         mapView = findViewById(R.id.mapViewFullScreen)

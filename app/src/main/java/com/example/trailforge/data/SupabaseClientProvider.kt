@@ -6,6 +6,7 @@ import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.storage.Storage
 
+// Supabase client provider to create a Supabase client instance
 
 object SupabaseClientProvider {
 

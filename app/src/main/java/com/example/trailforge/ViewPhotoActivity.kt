@@ -18,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// Class for viewing photos uploaded to Supabase
+
 class ViewPhotoActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
