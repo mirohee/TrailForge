@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.Manifest
 import android.animation.AnimatorSet
@@ -28,6 +28,7 @@ import android.util.Log
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import androidx.core.view.WindowCompat
+import com.example.trailforge.R
 
 // MapActivity for users to create a new route on the map
 

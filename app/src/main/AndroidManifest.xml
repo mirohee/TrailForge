@@ -33,7 +33,7 @@
 
         <!-- Main Activity is the entry point of your app -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TrailForge">
@@ -43,23 +43,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".HomeActivity" android:exported="true" />
+        <activity android:name=".ui.activity.HomeActivity" android:exported="true" />
 
-        <activity android:name=".AddRouteActivity" android:exported="true" />
+        <activity android:name=".ui.activity.AddRouteActivity" android:exported="true" />
 
-        <activity android:name=".SignupActivity" android:exported="true" />
+        <activity android:name=".ui.activity.SignupActivity" android:exported="true" />
 
-        <activity android:name=".LoginActivity" android:exported="true" />
+        <activity android:name=".ui.activity.LoginActivity" android:exported="true" />
 
-        <activity android:name=".TakePhotoActivity" android:exported="true" />
+        <activity android:name=".ui.activity.TakePhotoActivity" android:exported="true" />
 
-        <activity android:name=".RouteDetailsActivity" />
+        <activity android:name=".ui.activity.RouteDetailsActivity" />
 
-        <activity android:name=".RoutesListActivity" android:exported="true" />
+        <activity android:name=".ui.activity.RoutesListActivity" android:exported="true" />
 
-        <activity android:name=".ViewPhotoActivity" />
+        <activity android:name=".ui.activity.ViewPhotoActivity" />
 
-        <activity android:name=".RouteViewActivity" />
+        <activity android:name=".ui.activity.RouteViewActivity" />
 
 
         <!-- FileProvider for sharing image URI -->
@@ -74,7 +74,7 @@
         </provider>
 
         <activity
-            android:name=".MapActivity"
+            android:name=".ui.activity.MapActivity"
             android:exported="true"
             android:theme="@style/Theme.TrailForge" />
     </application>

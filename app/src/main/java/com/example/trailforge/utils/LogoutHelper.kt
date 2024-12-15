@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.example.trailforge.LoginActivity
+import com.example.trailforge.ui.activity.LoginActivity
 import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch

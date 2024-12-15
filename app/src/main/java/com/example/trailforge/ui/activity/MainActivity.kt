@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.example.trailforge.R
 
 // Main activity for the app
 

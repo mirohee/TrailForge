@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.content.Intent
 import android.os.Bundle

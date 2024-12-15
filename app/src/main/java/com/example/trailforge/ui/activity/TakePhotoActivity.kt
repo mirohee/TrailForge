@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.core.view.WindowCompat
+import com.example.trailforge.R
 
 // Class for taking a photo and uploading it to Supabase
 

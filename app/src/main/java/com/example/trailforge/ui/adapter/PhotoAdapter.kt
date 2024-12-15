@@ -1,4 +1,4 @@
-package com.example.trailforge.utils
+package com.example.trailforge.ui.adapter
 
 import android.net.Uri
 import android.view.LayoutInflater

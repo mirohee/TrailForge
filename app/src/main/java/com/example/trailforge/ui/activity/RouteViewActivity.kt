@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +12,7 @@ import org.osmdroid.views.overlay.Polyline
 import android.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.core.graphics.ColorUtils
+import com.example.trailforge.R
 
 // RouteViewActivity displays a full-screen view of a route
 

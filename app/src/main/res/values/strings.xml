@@ -6,4 +6,11 @@
     <string name="login_button">Login</string>
     <string name="signup_button">Sign Up</string>
     <string name="photo">Photo</string>
+    <string name="view_route">View Route</string>
+    <string name="save_route">Save Route</string>
+    <string name="route_name_required">Route name is required</string>
+    <string name="route_saved">Route saved: %1$s</string>
+    <string name="picture_selection_coming_soon">Picture selection coming soon!</string>
+
+
 </resources>

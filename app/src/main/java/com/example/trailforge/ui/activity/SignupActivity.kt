@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.trailforge.R
 import com.example.trailforge.data.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
@@ -89,17 +90,18 @@ class SignupActivity : ComponentActivity() {
                     this.password = password
                     this.data = userMetadata
                 }
+                Log.d("SignupActivity", "User signed up successfully: $user")
 
                 // Fetch the logged-in user's details
                 val session = auth.currentSessionOrNull()
                 val loggedInUsername = session?.user?.userMetadata?.get("username")?.toString() ?: username
 
-                Toast.makeText(this@SignupActivity, "Signup successful: ${user?.email}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SignupActivity, "Signup successful", Toast.LENGTH_SHORT).show()
 
                 // Navigate to HomeActivity with logged-in username
                 navigateToHome(loggedInUsername)
             } catch (e: Exception) {
-                Log.e("SignupActivity", "Error signing up: ${e.message}")
+                Log.e("SignupActivity", "Error signing up")
                 Toast.makeText(this@SignupActivity, "Signup failed: ${e.localizedMessage ?: "Unknown error"}", Toast.LENGTH_SHORT).show()
             }
         }

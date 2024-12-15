@@ -1,4 +1,4 @@
-package com.example.trailforge
+package com.example.trailforge.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.example.trailforge.R
 import com.example.trailforge.utils.LogoutHelper
 
 // HomeActivity redirects users to the map activity to add a new route or take a photo
