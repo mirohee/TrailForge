@@ -32,7 +32,7 @@ TrailForge is an Android application that allows users to create, view, and mana
     ```kotlin
     // In your local.properties file add
     SUPABASE_URL=[YOUR SUPABASE URL]
-    SUPABASE_API_KEY=[YOUR SUPABASE API KEY]"
+    SUPABASE_API_KEY=[YOUR SUPABASE API KEY]
     ```
 
 4. Build and run the project on an Android device or emulator.
