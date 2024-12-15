@@ -7,8 +7,8 @@ TrailForge is an Android application that allows users to create, view, and mana
 - User authentication (sign up and log in)
 - View routes on a map with markers and animations
 - Add new routes by selecting points on the map
-- Take photos and upload them with routes
-- Display photos taken with routes
+- Take photos and upload them to Supabase
+- Display photos from Supabase
 - Logout functionality
 
 ## Architecture
