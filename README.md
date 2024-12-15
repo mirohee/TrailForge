@@ -19,8 +19,13 @@ TrailForge is an Android application that allows users to create, view, and mana
 - osmdroid for map functionalities
 
 ## Images
-![image](https://github.com/user-attachments/assets/d3f2584b-d724-49b6-8e80-83f3382d55cc)
-![image](https://github.com/user-attachments/assets/f673e99f-9b55-49c2-be23-8c45729e00b3)
+<div style="display: flex; justify-content: center; gap: 10px;">
+
+<img src="https://github.com/user-attachments/assets/d3f2584b-d724-49b6-8e80-83f3382d55cc" alt="Image 1" style="width: 45%; height: auto;">
+
+<img src="https://github.com/user-attachments/assets/f673e99f-9b55-49c2-be23-8c45729e00b3" alt="Image 2" style="width: 45%; height: auto;">
+
+</div>
 
 
 ## Setup
